@@ -8,6 +8,26 @@
     await pb.collection('users').authWithPassword(username, password);
   }
 
+  async function signup() {
+    
+    try {
+      const data = {
+        username,
+        password,
+        passwordConfirm: password,
+        name: 'hi mom!'
+      };
+      const createdUser = await pb.collection('users').create(data);
+      await login();
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
+  function signOut() {
+    pb.authStore.clear();
+  }
+
 </script>
 
 {#if $currentUser} 
