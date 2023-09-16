@@ -8,19 +8,19 @@
     await pb.collection('users').authWithPassword(username, password);
   }
 
-  async function signup() {
+  async function signUp() {
     
     try {
       const data = {
         username,
         password,
         passwordConfirm: password,
-        name: 'hi mom!'
+        name: 'hi mom!',
       };
       const createdUser = await pb.collection('users').create(data);
       await login();
     } catch (err) {
-      console.error(err);
+      console.error(err)
     }
   }
 
@@ -31,9 +31,12 @@
 </script>
 
 {#if $currentUser} 
-  <p>Signed in as {$currentUser.username}</p>
+  <p>
+    Signed in as {$currentUser.username}
+    <button on:click={signOut}>Sign out</button>
+  </p>
 {:else}
-  <form>
+  <form on:submit|preventDefault>
     <input
       placeholder="Username"
       type="text"
@@ -46,7 +49,7 @@
       bind:value={password}
     />
 
-    <button>Sign up</button>
-    <button>Login</button>
+    <button on:click={signUp}>Sign up</button>
+    <button on:click={login}>Login</button>
   </form>
 {/if}
